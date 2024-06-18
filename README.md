@@ -1,36 +1,27 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Hotel website
 
-## Getting Started
+This is a customer facing hotel website showcasing a hotel and allowing users to register and book reservations, based on available dates and rooms. It is linked to the same Supabase backend as the hotel-admin website, which can be found on my page.
 
-First, run the development server:
+## Features:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Rooms section, where each room can be explored and booked, based on available dates.
+An about section with a short description of the property.
+A guest area, where users can register and sign in using Google OAuth, then manage their account and reservations.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### How it works
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Explore the rooms, check for available dates, select your reservation details, then book your stay, if you are logged in to the account.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Tech/frameworks used:
 
-## Learn More
+HTML/CSS  
+Javascript  
+React  
+Next.js  
+Next-auth  
+Tailwind  
+Supabase
 
-To learn more about Next.js, take a look at the following resources:
+### Live version
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+The live version can be viewed [here](https://hotel-website-demo-ten.vercel.app/).
