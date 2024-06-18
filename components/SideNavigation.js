@@ -8,6 +8,7 @@ import Link from "next/link";
 import SignOutButton from "./SignOutButton";
 import { usePathname } from "next/navigation";
 
+//storing the side navigation data that is used in the compoment to render the navigation list
 const navLinks = [
   {
     name: "Home",
@@ -32,10 +33,12 @@ function SideNavigation() {
   return (
     <nav className="border-r border-primary-900">
       <ul className="flex flex-col gap-2 h-full text-lg">
+        {/* Rendering the navigation list from the navLinks array */}
         {navLinks.map((link) => (
           <li key={link.name}>
             <Link
               href={link.href}
+              // Using conditional styling to highlight the active side navigation link
               className={`py-3 px-5 hover:bg-primary-900 hover:text-primary-100 transition-colors flex items-center gap-4 font-semibold text-primary-200 ${
                 pathname === link.href ? "bg-primary-900" : ""
               }`}

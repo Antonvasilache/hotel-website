@@ -1,10 +1,13 @@
-import UpdateReservation from "@/components/UpdateReservation";
 import { updateReservation } from "@/helpers/actions";
 import { getBooking, getCabin } from "@/helpers/data-service";
+import UpdateReservation from "@/components/UpdateReservation";
 
 async function Page({ params }) {
+  //Reading the reservation ID fron the route's params
   const reservationId = params.reservationId;
+  //Using the ID, we retrieve the reservation properties from the backend
   const { numGuests, cabinId, observations } = await getBooking(reservationId);
+  //Using the room ID to get the max capacity of the room
   const { maxCapacity } = await getCabin(cabinId);
 
   return (
@@ -14,8 +17,10 @@ async function Page({ params }) {
       </h2>
       <form
         className="bg-primary-900 py-8 px-12 text-lg flex gap-6 flex-col"
+        //upadating reservation using the inputs below
         action={updateReservation}
       >
+        {/* hidden input is used to deliver the reservationId into the above form action. numGuests and observations are visible and selected in the inputs below */}
         <input type="hidden" value={reservationId} name="reservationId" />
         <div className="space-y-2">
           <label htmlFor="numGuests">How many guests?</label>

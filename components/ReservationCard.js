@@ -12,13 +12,11 @@ export const formatDistanceFromNow = (dateStr) =>
 function ReservationCard({ booking, onDelete }) {
   const {
     id,
-    guestId,
     startDate,
     endDate,
     numNights,
     totalPrice,
     numGuests,
-    status,
     created_at,
     cabins: { name, image },
   } = booking;
@@ -39,6 +37,7 @@ function ReservationCard({ booking, onDelete }) {
           <h3 className="text-xl font-semibold">
             {numNights} nights in Room {name}
           </h3>
+          {/* Flagging reservation as past or upcoming based on dates */}
           {isPast(new Date(startDate)) ? (
             <span className="bg-yellow-800 text-yellow-200 h-7 px-3 uppercase text-xs font-bold flex items-center rounded-sm">
               past
@@ -51,7 +50,9 @@ function ReservationCard({ booking, onDelete }) {
         </div>
 
         <p className="text-lg text-primary-300">
-          {format(new Date(startDate), "EEE, MMM dd yyyy")} (
+          {format(new Date(startDate), "EEE, MMM dd yyyy")}
+          {/* Displaying reservation start date conditionally, based on whether the check-in is today or not */}
+          (
           {isToday(new Date(startDate))
             ? "Today"
             : formatDistanceFromNow(startDate)}
@@ -65,14 +66,17 @@ function ReservationCard({ booking, onDelete }) {
             {numGuests} guest{numGuests > 1 && "s"}
           </p>
           <p className="ml-auto text-sm text-primary-400">
+            {/* Date on which the reservation was made */}
             Booked {format(new Date(created_at), "EEE, MMM dd yyyy, p")}
           </p>
         </div>
       </div>
 
       <div className="flex flex-col border-1 border-primary-800 w-[100px]">
+        {/* Edit and Delete buttons are rendered only if the reservation is not in the past */}
         {!isPast(startDate) ? (
           <>
+            {/* Edit button will redirect to a distinct editing page */}
             <Link
               href={`/account/reservations/edit/${id}`}
               className="group flex items-center gap-2 uppercase text-xs font-bold text-primary-300 border-b border-primary-800 flex-grow px-3 hover:bg-accent-600 transition-colors hover:text-primary-900"
@@ -80,6 +84,7 @@ function ReservationCard({ booking, onDelete }) {
               <PencilSquareIcon className="h-5 w-5 text-primary-600 group-hover:text-primary-800 transition-colors" />
               <span className="mt-1">Edit</span>
             </Link>
+            {/* Delete button will remove the reservation item from the list */}
             <DeleteReservation bookingId={id} onDelete={onDelete} />
           </>
         ) : (

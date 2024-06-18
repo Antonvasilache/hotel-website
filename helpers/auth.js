@@ -2,6 +2,7 @@ import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
 import { createGuest, getGuest } from "./data-service";
 
+//Configuring the next-auth library to provide Google sign up and interacting with session
 const authConfig = {
   providers: [
     Google({
@@ -10,10 +11,10 @@ const authConfig = {
     }),
   ],
   callbacks: {
-    authorized({ auth, request }) {
+    authorized({ auth }) {
       return !!auth?.user;
     },
-    async signIn({ user, account, profile }) {
+    async signIn({ user }) {
       try {
         const existingGuest = await getGuest(user.email);
 
@@ -26,7 +27,7 @@ const authConfig = {
       }
     },
 
-    async session({ session, user }) {
+    async session({ session }) {
       const guest = await getGuest(session.user.email);
       session.user.guestId = guest.id;
 

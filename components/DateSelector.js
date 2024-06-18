@@ -6,10 +6,11 @@ import {
   isSameDay,
   isWithinInterval,
 } from "date-fns";
-import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
+import { DayPicker } from "react-day-picker";
 import { useReservation } from "./ReservationContext";
 
+//function to check if any of the dates in the given range are already booked
 function isAlreadyBooked(range, datesArr) {
   return (
     range.from &&
@@ -23,9 +24,11 @@ function isAlreadyBooked(range, datesArr) {
 export default function DateSelector({ settings, room, bookedDates }) {
   const { range, setRange, resetRange } = useReservation();
 
+  //displayRange will be empty if any of the selected dates are already booked, otherwise it will be the range selected by the user
   const displayRange = isAlreadyBooked(range, bookedDates) ? {} : range;
 
   const { regularPrice, discount } = room;
+  //calculating the number of nights selected by the user
   const numNights = differenceInDays(displayRange.to, displayRange.from);
   const roomPrice = numNights * (regularPrice - discount);
 
@@ -37,6 +40,7 @@ export default function DateSelector({ settings, room, bookedDates }) {
         className="pt-12 place-self-center"
         mode="range"
         onSelect={setRange}
+        //dates will be selected if the range is valid
         selected={displayRange}
         min={minBookingLength + 1}
         max={maxBookingLength}
@@ -46,7 +50,9 @@ export default function DateSelector({ settings, room, bookedDates }) {
         captionLayout="dropdown"
         numberOfMonths={2}
         disabled={(currentDate) =>
+          //disabling past dates
           isPast(currentDate) ||
+          //disabling dates that are already booked
           bookedDates.some((date) => isSameDay(date, currentDate))
         }
       />

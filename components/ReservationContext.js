@@ -6,6 +6,7 @@ const ReservationContext = createContext();
 
 const initialState = { from: undefined, to: undefined };
 
+//using the Context API to store the start and end dates selected from the calendar by the user, in the room page
 function ReservationProvider({ children }) {
   const [range, setRange] = useState(initialState);
   const resetRange = () => setRange(initialState);
@@ -17,6 +18,7 @@ function ReservationProvider({ children }) {
   );
 }
 
+//custom hook used to export the range object (containing the dates) and the resetRange function that resets the dates
 function useReservation() {
   const context = useContext(ReservationContext);
 

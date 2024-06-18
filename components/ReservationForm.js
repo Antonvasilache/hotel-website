@@ -2,8 +2,8 @@
 
 import { useFormStatus } from "react-dom";
 import { differenceInDays } from "date-fns";
-import { useReservation } from "./ReservationContext";
 import { createReservation } from "@/helpers/actions";
+import { useReservation } from "./ReservationContext";
 
 function ReservationForm({ room, user }) {
   const { pending } = useFormStatus();
@@ -13,9 +13,11 @@ function ReservationForm({ room, user }) {
   const startDate = range.from;
   const endDate = range.to;
 
+  //calculating number of nights and room price, if a discount exists
   const numNights = differenceInDays(endDate, startDate);
   const roomPrice = numNights * (regularPrice - discount);
 
+  //creating a reservation object with the properties related to the calendar section and the room Id
   const reservationData = {
     startDate,
     endDate,
@@ -24,6 +26,7 @@ function ReservationForm({ room, user }) {
     cabinId: id,
   };
 
+  //the reservation object will be added to the other properties mentioned in the createReservation action, matching the bookings table schema in the backend
   const createReservationWithData = createReservation.bind(
     null,
     reservationData
@@ -47,7 +50,9 @@ function ReservationForm({ room, user }) {
 
       <form
         action={async (formData) => {
+          //collecting the number of guests and special requests, if any, from the reservation form
           await createReservationWithData(formData);
+          //resetting the dates range after the reservation has been made
           resetRange();
         }}
         className="bg-primary-900 py-10 px-16 text-lg flex gap-5 flex-col"
@@ -63,6 +68,7 @@ function ReservationForm({ room, user }) {
             <option value="" key="">
               Select number of guests...
             </option>
+            {/* The options for number of guests will be dynamically generated, based on the maxCapacity of each room */}
             {Array.from({ length: maxCapacity }, (_, i) => i + 1).map((x) => (
               <option value={x} key={x}>
                 {x} {x === 1 ? "guest" : "guests"}

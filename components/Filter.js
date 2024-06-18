@@ -7,11 +7,15 @@ function Filter() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
+  //Variable used below to highlight the active filter using dynamic styles
   const activeFilter = searchParams.get("capacity") ?? "all";
 
+  //Setting the capacity using the filter parameter (defined below as all/small/medium/large)
   function handleFilter(filter) {
     const params = new URLSearchParams(searchParams);
+    //Setting the value of the "capacity" parameter to the room size
     params.set("capacity", filter);
+    //Navigating to the newly created route
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
   }
 

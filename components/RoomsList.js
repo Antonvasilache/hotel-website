@@ -1,14 +1,12 @@
 import RoomCard from "./RoomCard";
 import { getCabins } from "@/helpers/data-service";
-import { unstable_noStore as noStore } from "next/cache";
 
 export default async function RoomsList({ filter }) {
-  //noStore();
-
   const rooms = await getCabins();
 
   if (!rooms.length) return null;
 
+  //displayedRooms will store the rooms that fit the maxCapacity, as defined by the small/medium/large sizes
   let displayedRooms;
   if (filter === "all") displayedRooms = rooms;
   if (filter === "small")
@@ -22,6 +20,7 @@ export default async function RoomsList({ filter }) {
 
   return (
     <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 xl:gap-14">
+      {/* RoomCards will be rendered for each room found in the displayedRooms array */}
       {displayedRooms.map((room) => (
         <RoomCard room={room} key={room.id}></RoomCard>
       ))}

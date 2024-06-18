@@ -4,6 +4,7 @@ export const metadata = {
   title: "Login",
 };
 
+//user will be redirected here from the /account route if they are not logged in
 export default function Page() {
   return (
     <div className="flex flex-col gap-10 mt-10 items-center">

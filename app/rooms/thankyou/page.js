@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+//user will be redirected here after the reservation is sucessfully created
 export default function Page() {
   return (
     <div className="text-center space-y-6 mt-4">

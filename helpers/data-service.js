@@ -1,5 +1,5 @@
-import { notFound } from "next/navigation";
 import { supabase } from "./supabase";
+import { notFound } from "next/navigation";
 import { eachDayOfInterval } from "date-fns";
 
 /////////////
@@ -15,27 +15,24 @@ export async function getCabin(id) {
   // For testing
   // await new Promise((res) => setTimeout(res, 1000));
 
-  if (error) {
-    //console.error(error);
-    notFound();
-  }
+  if (error) notFound();
 
   return data;
 }
 
-export async function getCabinPrice(id) {
-  const { data, error } = await supabase
-    .from("cabins")
-    .select("regularPrice, discount")
-    .eq("id", id)
-    .single();
+// export async function getCabinPrice(id) {
+//   const { data, error } = await supabase
+//     .from("cabins")
+//     .select("regularPrice, discount")
+//     .eq("id", id)
+//     .single();
 
-  if (error) {
-    console.error(error);
-  }
+//   if (error) {
+//     console.error(error);
+//   }
 
-  return data;
-}
+//   return data;
+// }
 
 export const getCabins = async function () {
   const { data, error } = await supabase
@@ -53,18 +50,18 @@ export const getCabins = async function () {
 
 // Guests are uniquely identified by their email address
 export async function getGuest(email) {
-  const { data, error } = await supabase
+  const { data } = await supabase
     .from("guests")
     .select("*")
     .eq("email", email)
     .single();
 
-  // No error here! We handle the possibility of no guest in the sign in callback
+  // No error here. We handle the possibility of no guest in the sign in callback
   return data;
 }
 
 export async function getBooking(id) {
-  const { data, error, count } = await supabase
+  const { data, error } = await supabase
     .from("bookings")
     .select("*")
     .eq("id", id)
@@ -79,9 +76,8 @@ export async function getBooking(id) {
 }
 
 export async function getBookings(guestId) {
-  const { data, error, count } = await supabase
+  const { data, error } = await supabase
     .from("bookings")
-    // We actually also need data on the cabins as well. But let's ONLY take the data that we actually need, in order to reduce downloaded data.
     .select(
       "id, created_at, startDate, endDate, numNights, numGuests, totalPrice, guestId, cabinId, cabins(name, image)"
     )
@@ -142,6 +138,7 @@ export async function getCountries() {
     // const res = await fetch(
     //   "https://restcountries.com/v2/all?fields=name,flag"
     // );
+    //alternative countries API, when the first breaks
     const res = await fetch(
       "https://countriesnow.space/api/v0.1/countries/flag/images"
     );
