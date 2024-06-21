@@ -13,8 +13,8 @@ import { useReservation } from "./ReservationContext";
 //function to check if any of the dates in the given range are already booked
 function isAlreadyBooked(range, datesArr) {
   return (
-    range.from &&
-    range.to &&
+    range?.from &&
+    range?.to &&
     datesArr.some((date) =>
       isWithinInterval(date, { start: range.from, end: range.to })
     )
@@ -29,7 +29,7 @@ export default function DateSelector({ settings, room, bookedDates }) {
 
   const { regularPrice, discount } = room;
   //calculating the number of nights selected by the user
-  const numNights = differenceInDays(displayRange.to, displayRange.from);
+  const numNights = differenceInDays(displayRange?.to, displayRange?.from);
   const roomPrice = numNights * (regularPrice - discount);
 
   const { minBookingLength, maxBookingLength } = settings;
@@ -84,7 +84,7 @@ export default function DateSelector({ settings, room, bookedDates }) {
           ) : null}
         </div>
 
-        {range.from || range.to ? (
+        {range?.from || range?.to ? (
           <button
             className="border border-primary-800 py-2 px-4 text-sm font-semibold"
             onClick={resetRange}

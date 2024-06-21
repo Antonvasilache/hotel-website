@@ -10,8 +10,8 @@ function ReservationForm({ room, user }) {
   const { range, resetRange } = useReservation();
   const { maxCapacity, regularPrice, discount, id } = room;
 
-  const startDate = range.from;
-  const endDate = range.to;
+  const startDate = range?.from;
+  const endDate = range?.to;
 
   //calculating number of nights and room price, if a discount exists
   const numNights = differenceInDays(endDate, startDate);
