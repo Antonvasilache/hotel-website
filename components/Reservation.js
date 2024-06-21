@@ -21,7 +21,7 @@ async function Reservation({ room }) {
       {session?.user ? (
         <ReservationForm room={room} user={session.user} />
       ) : (
-        <LoginMessage />
+        <LoginMessage roomId={room.id} />
       )}
     </div>
   );

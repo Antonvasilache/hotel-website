@@ -106,7 +106,6 @@ export async function updateReservation(formData) {
   //Authorization
   const guestBookings = await getBookings(session.user.guestId);
   const guestBookingIds = guestBookings.map((booking) => booking.id);
-  console.log(guestBookingIds);
 
   if (!guestBookingIds.includes(reservationId))
     throw new Error("You are not allowed to update this booking");
@@ -134,8 +133,12 @@ export async function updateReservation(formData) {
 }
 
 //Signing in using the signIn function from the authConfig object
-export async function signInAction() {
-  await signIn("google", { redirectTo: "/account" });
+export async function signInAction(formData = null) {
+  const roomId = formData ? formData.get("roomId") : null;
+
+  await signIn("google", {
+    redirectTo: roomId ? `/rooms/${roomId}` : `/account`,
+  });
 }
 
 //Signing out using the signOut function from the authConfig object
